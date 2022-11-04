@@ -1,0 +1,30 @@
+version: '3.1'
+
+services:
+  mysql:
+    container_name: 'mysql'
+    image: mysql:8.0.31
+    environment:
+      - 'MYSQL_ROOT_PASSWORD=mysql'
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql:/var/lib/mysql
+  quartz-cluster-1:
+    container_name: 'quartz-cluster-1'
+    image: quartz-cluster:latest
+    depends_on:
+      - mysql
+  quartz-cluster-2:
+    container_name: 'quartz-cluster-2'
+    image: quartz-cluster:latest
+    depends_on:
+      - mysql
+  quartz-cluster-3:
+    container_name: 'quartz-cluster-3'
+    image: quartz-cluster:latest
+    depends_on:
+      - mysql
+
+volumes:
+  mysql:
